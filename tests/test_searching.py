@@ -9,7 +9,8 @@ from algorithms.searching import (
     depth_first_search,
     kmp_search,
     rabinkarp_search,
-    ternary_search
+    ternary_search,
+    interpolation_search
 )
 
 
@@ -205,3 +206,33 @@ class TestTernarySearch(unittest.TestCase):
         rv2 = ternary_search.search(self.function2, -2.0, 2.0, self.eps)
         self.assertAlmostEqual(rv1, 2.0, 6)
         self.assertAlmostEqual(rv2, 0.0, 6)
+
+
+class TestInterpolationSearch(unittest.TestCase):
+    """
+    Tests teranry search algorithm on unimodal functions
+    """
+
+    def test_interpolationsearch(self):
+        self.seq = range(10)
+        rv1 = interpolation_search.interpolation_search(self.seq, 0)
+        rv2 = interpolation_search.interpolation_search(self.seq, 9)
+        rv3 = interpolation_search.interpolation_search(self.seq, -1)
+        rv4 = interpolation_search.interpolation_search(self.seq, 10)
+        rv5 = interpolation_search.interpolation_search(self.seq, 4)
+        self.assertIs(rv1, 0)
+        self.assertIs(rv2, 9)
+        self.assertFalse(rv3)
+        self.assertFalse(rv4)
+        self.assertIs(rv5, 4)
+        self.seq = range(9)
+        rv1 = interpolation_search.interpolation_search(self.seq, 0)
+        rv2 = interpolation_search.interpolation_search(self.seq, 8)
+        rv3 = interpolation_search.interpolation_search(self.seq, -1)
+        rv4 = interpolation_search.interpolation_search(self.seq, 10)
+        rv5 = interpolation_search.interpolation_search(self.seq, 4)
+        self.assertIs(rv1, 0)
+        self.assertIs(rv2, 8)
+        self.assertFalse(rv3)
+        self.assertFalse(rv4)
+        self.assertIs(rv5, 4)
